@@ -1,6 +1,10 @@
 
+# Folders to ignore
+/peak_calling/peaks
+/peak_calling/bed_files
+
+
 # Created by https://www.gitignore.io/api/r,batch,python,pycharm
-# Edit at https://www.gitignore.io/?templates=r,batch,python,pycharm
 
 ### Batch ###
 # BatchFiles
