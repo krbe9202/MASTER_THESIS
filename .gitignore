@@ -1,8 +1,11 @@
 
 # Folders to ignore
+/peak_calling/bam
 /peak_calling/peaks
 /peak_calling/bed_files
-
+/downstream_analysis/homer
+/downstream_analysis/bed_files
+/downstream_analysis/peaks
 
 # Created by https://www.gitignore.io/api/r,batch,python,pycharm
 
