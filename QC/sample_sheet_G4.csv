@@ -1,0 +1,10 @@
+SampleID,Tissue,Factor,ControlID,bamReads,bamControl,Peaks,PeakCaller
+G4_1H6_ALL,mESC,1HG,IN_ALL,./bam20190303/G4_1H6_ALL.mm9.bam, ./bam20190303/IN_ALL.mm9.bam,./peaks/G4_1H6_ALL.mm9.bam_peaks.narrowPeak,macs
+G4_BG4_ALL,mESC,BG4,IN_ALL,./bam20190303/G4_BG4_ALL.mm9.bam , ./bam20190303/IN_ALL.mm9.bam,./peaks/G4_BG4_ALL.mm9.bam_peaks.narrowPeak,macs
+G4_BG4FLAG_ALL,mESC,BG4FLAG,IN_ALL,./bam20190303/G4_BG4FLAG_ALL.mm9.bam, ./bam20190303/IN_ALL.mm9.bam,./peaks/G4_BG4FLAG_ALL.mm9.bam_peaks.narrowPeak ,macs
+G4_MN_2i_ALL,mESC,G4_MN_2i,IN_MN_2i_ALL,./bam/G4_MN_2i_ALL.mm9.bam,./bam/IN_MN_2i_ALL.mm9.bam,./peaks/G4_MN_2i_ALL.mm9.bam_peaks.narrowPeak,macs
+G4_MN_SL_ALL,mESC,G4_MN_SL,IN_MN_SL_ALL,./bam/G4_MN_SL_ALL.mm9.bam,./bam/IN_MN_SL_ALL.mm9.bam,./peaks/G4_MN_SL_ALL.mm9.bam_peaks.narrowPeak,macs
+G4_S_2i_ALL,mESC,G4_S_2i,IN_S_2i_ALL,./bam/G4_S_2i_ALL.mm9.bam,./bam/IN_S_2i_ALL.mm9.bam,./peaks/G4_S_2i_ALL.mm9.bam_peaks.narrowPeak,macs
+G4_S_SL_ALL,mESC,G4_S_SL,IN_S_SL_ALL,./bam/G4_S_SL_ALL.mm9.bam,./bam/IN_S_SL_ALL.mm9.bam,./peaks/G4_S_SL_ALL.mm9.bam_peaks.narrowPeak,macs
+G4_06,mESC,G4_06,,./bam_old/G4_06_ALL.mm9.bam,,./peaks/G4_06_ALL.mm9_peaks.narrowPeak,macs
+G4_07,mESC,G4_07,,./bam_old/G4_07_ALL.mm9.bam,,./peaks/G4_07_ALL.mm9_peaks.narrowPeak,macs
