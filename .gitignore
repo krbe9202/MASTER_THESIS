@@ -6,6 +6,10 @@
 /downstream_analysis/homer
 /downstream_analysis/bed_files
 /downstream_analysis/peaks
+/downstream_analysis/bedtools
+/downstream_analysis/figures
+/downstream_analysis/G4prediction
+/downstream_analysis/venn_diagrams
 
 # Created by https://www.gitignore.io/api/r,batch,python,pycharm
 

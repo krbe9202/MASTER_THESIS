@@ -4,10 +4,10 @@
 # module load MACS/2.1.2
 
 # Input path to BAM folder and output directory for peak files 
-bedPath=$1
+bamPath=$1
 MACS2_out_dir="./peaks" # Specify output directory
 
-set -- "$bedPath"/*.bam
+set -- "$bamPath"/*.bam
 
 # Handle the case where no files were found matching our glob
 [[ -e $1 || -L $1 ]] || { echo "No bam files found!" >&2; exit 1; }
@@ -26,15 +26,15 @@ pvalue="1e-5"
 i=0
 pairs=()
 
-for bamFile in $bedPath/*.bam; do 
+for bamFile in $bamPath/*.bam; do 
 	type=$(echo $(basename "$bamFile") | cut -d _ -f 1)
 	name=$(echo $(basename "$bamFile") | grep -oP '(?<=_).*.?(?=\.)') 
 
 	if [ ${#pairs[@]} -eq 0 ]; then 		  
-		pairs[i++]=$(find $bedPath/*.bam -type f \( -name "$IPtarget"_"$name.bam" -o -name "$inputName"_"$name"."bam" \) | sort -u | tr '\n' ' ' ):$(find $bedPath/*.bam -type f \( -name "$IPtarget"_"$name.bam" -o -name "$inputName"_"$name"."bam" \) | wc -l )
+		pairs[i++]=$(find $bamPath/*.bam -type f \( -name "$IPtarget"_"$name.bam" -o -name "$inputName"_"$name"."bam" \) | sort -u | tr '\n' ' ' ):$(find $bamPath/*.bam -type f \( -name "$IPtarget"_"$name.bam" -o -name "$inputName"_"$name"."bam" \) | wc -l )
 	else
     	if ! [[ "${pairs[@]:0}" == *"$bamFile"* ]]; then 
-    		pairs[i++]=$(find $bedPath/*.bam -type f \( -name "$IPtarget"_"$name.bam" -o -name "$inputName"_"$name"."bam" \) | sort -u | tr '\n' ' ' ):$(find $bedPath/*.bam -type f \( -name "$IPtarget"_"$name.bam" -o -name "$inputName"_"$name"."bam" \) | wc -l ) 
+    		pairs[i++]=$(find $bamPath/*.bam -type f \( -name "$IPtarget"_"$name.bam" -o -name "$inputName"_"$name"."bam" \) | sort -u | tr '\n' ' ' ):$(find $bamPath/*.bam -type f \( -name "$IPtarget"_"$name.bam" -o -name "$inputName"_"$name"."bam" \) | wc -l ) 
     	fi 
 	fi
 
@@ -56,7 +56,7 @@ for key in ${!pairs[@]}; do
 					
 					echo "---- Performing peak calling on $(basename "$chip") as treatment and $(basename "$input") as control"
 					# Peak calling 
-					# macs2 callpeak -t $chip -c $input -g $gen_size -p $pvalue -n $(basename "$chip") --outdir $MACS2_out_dir 
+					macs2 callpeak -t $chip -c $input -g $gen_size -p $pvalue -n $(basename "$chip") --outdir $MACS2_out_dir 
 					chip=""
 					input=""
 				fi 
@@ -76,10 +76,13 @@ done
 # Generate bed files from MACS2 peak files
 
 for peakFile in $MACS2_out_dir/*.narrowPeak; do 
-	echo "---- Generating bed file for $(basename "$peakFile")"
 	
-	# Filter based on q-value
-	awk '$9>3' $peakFile | cut -f 1-3 >  ./bed_files/$(basename "$peakFile" | grep -oP '(?<=_).*.?(?=\.)').bed
+	echo "---- Generating bed file and sorted bed file for $(basename "$peakFile")"
+	
+	cut -f 1-3 $peakFile > ./bed_files/$(basename "$peakFile" | grep -oP '(?<=_).*.?(?=\.)').bed
+	# Filter and sort based on q-value 
+	awk '$9>2' $peakFile | sort -t $'\t' -k9,9rn $peakFile | cut -f 1-3  >  ./bed_files/$(basename "$peakFile" | grep -oP '(?<=_).*.?(?=\.)')_sorted.bed
 done  
-
+bedtools multiIntersectBed -i ./bed_files/*_peaks.bed > consensus_peaks.bed 
+bedtools multiIntersectBed -i  ./bed_files/*_sorted.bed > consensus_peaks_sorted.bed
 # Assessment of reproducibility  
